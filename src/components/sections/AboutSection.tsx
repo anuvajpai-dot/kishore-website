@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Aperture, Heart, Award } from "lucide-react";
 
 const fadeUp = {
@@ -59,13 +60,29 @@ export default function AboutSection() {
             </motion.div>
           </motion.div>
 
-          {/* Right: Visual cards */}
+          {/* Right: Photo + Visual cards */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.9, delay: 0.3 }}
             className="space-y-4"
           >
+            {/* Profile photo */}
+            <div className="relative w-full aspect-[4/5] overflow-hidden border border-gold-500/20">
+              <Image
+                src="/images/kishore/IMG_6868.JPG"
+                alt="Kishore Gunda – Photographer"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+              <div className="absolute bottom-4 left-4">
+                <p className="text-[#f5f0eb] font-serif text-lg">Kishore Gunda</p>
+                <p className="text-gold-500 text-xs tracking-widest uppercase">Photographer</p>
+              </div>
+            </div>
             {/* Credibility card */}
             <div className="glass rounded-none p-8 border border-gold-500/10">
               <div className="flex items-start gap-5">

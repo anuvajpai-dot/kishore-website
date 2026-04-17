@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Award, Aperture, Heart, Camera, MapPin, Mail } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "About",
@@ -29,8 +30,20 @@ export default function AboutPage() {
 
       {/* Main story */}
       <div className="max-w-7xl mx-auto px-6 py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center mb-28">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start mb-28">
           <div>
+            {/* Kishore portrait */}
+            <div className="relative w-full aspect-[3/4] overflow-hidden border border-gold-500/20 mb-10">
+              <Image
+                src="/images/kishore/IMG_6868.JPG"
+                alt="Kishore Gunda – Photographer"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+            </div>
             <h2 className="font-serif text-3xl text-[#f5f0eb] mb-8 font-light">
               From Engineering Precision to{" "}
               <span className="text-gold-500">Artistic Vision</span>
