@@ -1,5 +1,5 @@
 "use client";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
@@ -15,30 +15,30 @@ const categories = [
   { key: "PORTRAIT", label: "Portraits" },
 ];
 
-// Placeholder photos until real ones are uploaded
-const placeholderPhotos = [
-  { id: "1", title: "Golden Hour Wedding", category: "MARRIAGE", url: "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80" },
-  { id: "2", title: "Birthday Joy", category: "BIRTHDAY", url: "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=800&q=80" },
-  { id: "3", title: "First Moments", category: "NEWBORN", url: "https://images.unsplash.com/photo-1555252585-b6a0af4d8e74?w=800&q=80" },
-  { id: "4", title: "Family Bond", category: "FAMILY", url: "https://images.unsplash.com/photo-1511895426328-dc8714191011?w=800&q=80" },
-  { id: "5", title: "Expecting", category: "PREGNANCY", url: "https://images.unsplash.com/photo-1492725764893-90b379c2b6e7?w=800&q=80" },
-  { id: "6", title: "Portrait Study", category: "PORTRAIT", url: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=800&q=80" },
-  { id: "7", title: "Wedding Vows", category: "MARRIAGE", url: "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=800&q=80" },
-  { id: "8", title: "Cake Smash", category: "BIRTHDAY", url: "https://images.unsplash.com/photo-1558636508-e0de89a7c1d5?w=800&q=80" },
-  { id: "9", title: "Newborn Sleep", category: "NEWBORN", url: "https://images.unsplash.com/photo-1544776193-352d25ca82cd?w=800&q=80" },
-  { id: "10", title: "Family Portrait", category: "FAMILY", url: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=80" },
-  { id: "11", title: "Maternity Glow", category: "PREGNANCY", url: "https://images.unsplash.com/photo-1578898887932-dce23a595ad4?w=800&q=80" },
-  { id: "12", title: "Studio Portrait", category: "PORTRAIT", url: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800&q=80" },
-];
+type Photo = {
+  id: string;
+  title: string;
+  category: string;
+  url: string;
+};
 
 export default function PortfolioClient() {
   const [activeFilter, setActiveFilter] = useState("ALL");
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [photos, setPhotos] = useState<Photo[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/photos")
+      .then((r) => r.json())
+      .then((data) => setPhotos(data.photos ?? []))
+      .finally(() => setLoading(false));
+  }, []);
 
   const filtered = activeFilter === "ALL"
-    ? placeholderPhotos
-    : placeholderPhotos.filter((p) => p.category === activeFilter);
+    ? photos
+    : photos.filter((p) => p.category === activeFilter);
 
   const openLightbox = useCallback((index: number) => {
     setLightboxIndex(index);
@@ -80,6 +80,11 @@ export default function PortfolioClient() {
 
       {/* Masonry Grid */}
       <div className="max-w-7xl mx-auto px-6 pb-20">
+        {loading ? (
+          <div className="text-center py-20 text-[#606060] tracking-widest uppercase text-xs">Loading...</div>
+        ) : filtered.length === 0 ? (
+          <div className="text-center py-20 text-[#606060] tracking-widest uppercase text-xs">No photos in this category yet</div>
+        ) : (
         <motion.div layout className="masonry-grid">
           <AnimatePresence>
             {filtered.map((photo, index) => (
@@ -114,6 +119,7 @@ export default function PortfolioClient() {
             ))}
           </AnimatePresence>
         </motion.div>
+        )}
       </div>
 
       {/* Lightbox */}
