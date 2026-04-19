@@ -49,8 +49,6 @@ export default function InstagramSection() {
   );
 }
 
-
-export default function InstagramSection() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
