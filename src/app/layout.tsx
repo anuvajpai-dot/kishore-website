@@ -26,10 +26,10 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://pihudrive.lol",
-    siteName: "Engineered Moments by Kishore",
-    title: "Engineered Moments by Kishore | Professional Photography",
+    siteName: "The Ordinary Photographer",
+    title: "The Ordinary Photographer | Professional Photography",
     description: "Professional photography capturing life's most precious moments.",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Engineered Moments by Kishore" }],
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "The Ordinary Photographer" }],
   },
   robots: { index: true, follow: true },
 };
@@ -45,7 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
         />
       </head>
-      <body className="bg-[#0a0a0a] text-[#f5f0eb] min-h-screen">
+      <body className="bg-[#FDFCFA] text-[#1C1918] min-h-screen">
         <Providers>
           <Navbar />
           <main>{children}</main>

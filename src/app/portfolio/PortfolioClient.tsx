@@ -8,7 +8,6 @@ import Image from "next/image";
 const categories = [
   { key: "ALL", label: "All" },
   { key: "BIRTHDAY", label: "Birthdays" },
-  { key: "MARRIAGE", label: "Weddings" },
   { key: "PREGNANCY", label: "Pregnancy" },
   { key: "NEWBORN", label: "Newborn" },
   { key: "FAMILY", label: "Family" },
@@ -46,7 +45,7 @@ export default function PortfolioClient() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] pt-24">
+    <div className="min-h-screen bg-[#FDFCFA] pt-24">
       {/* Header */}
       <div className="text-center py-16 px-6">
         <span className="text-gold-500 text-xs tracking-[0.4em] uppercase font-medium inline-flex items-center gap-3 mb-4">
@@ -54,7 +53,7 @@ export default function PortfolioClient() {
           Portfolio
           <span className="w-8 h-px bg-gold-500" />
         </span>
-        <h1 className="font-serif text-5xl md:text-6xl text-[#f5f0eb] font-light mb-6">
+        <h1 className="font-serif text-5xl md:text-6xl text-[#1C1918] font-light mb-6">
           A Visual{" "}
           <span className="gold-shimmer font-semibold">Journey</span>
         </h1>
@@ -69,8 +68,8 @@ export default function PortfolioClient() {
             onClick={() => setActiveFilter(cat.key)}
             className={`px-5 py-2 text-xs tracking-widest uppercase transition-all duration-300 border ${
               activeFilter === cat.key
-                ? "bg-gold-500 text-[#0a0a0a] border-gold-500"
-                : "bg-transparent text-[#808080] border-[#303030] hover:border-gold-500/50 hover:text-gold-500"
+                ? "bg-gold-500 text-white border-gold-500"
+                : "bg-transparent text-[#666] border-gray-200 hover:border-gold-500/50 hover:text-gold-500"
             }`}
           >
             {cat.label}
@@ -81,9 +80,9 @@ export default function PortfolioClient() {
       {/* Masonry Grid */}
       <div className="max-w-7xl mx-auto px-6 pb-20">
         {loading ? (
-          <div className="text-center py-20 text-[#606060] tracking-widest uppercase text-xs">Loading...</div>
+          <div className="text-center py-20 text-[#999] tracking-widest uppercase text-xs">Loading...</div>
         ) : filtered.length === 0 ? (
-          <div className="text-center py-20 text-[#606060] tracking-widest uppercase text-xs">No photos in this category yet</div>
+          <div className="text-center py-20 text-[#999] tracking-widest uppercase text-xs">No photos in this category yet</div>
         ) : (
         <motion.div layout className="masonry-grid">
           <AnimatePresence>
@@ -107,9 +106,9 @@ export default function PortfolioClient() {
                     className="w-full h-auto block object-cover transition-transform duration-700 group-hover:scale-105"
                     sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 33vw"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-4 group-hover:translate-y-0 transition-transform duration-300 opacity-0 group-hover:opacity-100">
-                    <p className="text-[#f5f0eb] font-serif text-sm">{photo.title}</p>
+                    <p className="text-white font-serif text-sm">{photo.title}</p>
                     <p className="text-gold-500 text-[10px] tracking-widest uppercase">
                       {categories.find((c) => c.key === photo.category)?.label}
                     </p>

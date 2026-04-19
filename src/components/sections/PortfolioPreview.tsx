@@ -7,7 +7,6 @@ import Image from "next/image";
 
 const categoryMeta: Record<string, { name: string; label: string }> = {
   BIRTHDAY:  { name: "Birthdays",  label: "Celebrate" },
-  MARRIAGE:  { name: "Weddings",   label: "Forever"   },
   PREGNANCY: { name: "Pregnancy",  label: "Expecting" },
   NEWBORN:   { name: "Newborn",    label: "New Life"  },
   FAMILY:    { name: "Family",     label: "Together"  },
@@ -48,7 +47,7 @@ export default function PortfolioPreview() {
     .filter((c) => c.photo);
 
   return (
-    <section ref={ref} className="py-32 bg-[#0a0a0a]">
+    <section ref={ref} className="py-32 bg-[#FDFCFA]">
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -61,7 +60,7 @@ export default function PortfolioPreview() {
             Portfolio
             <span className="w-8 h-px bg-gold-500" />
           </span>
-          <h2 className="font-serif text-4xl md:text-5xl text-[#f5f0eb] font-light">
+          <h2 className="font-serif text-4xl md:text-5xl text-[#1a1a1a] font-light">
             Moments Through{" "}
             <span className="gold-shimmer font-semibold">Every Lens</span>
           </h2>

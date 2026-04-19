@@ -19,7 +19,7 @@ function StarRating({ rating }: { rating: number }) {
         <Star
           key={s}
           size={14}
-          className={s <= rating ? "text-gold-500 fill-gold-500" : "text-[#404040]"}
+          className={s <= rating ? "text-gold-500 fill-gold-500" : "text-[#D4C9BE]"}
         />
       ))}
     </div>
@@ -50,7 +50,7 @@ export default function ReviewsSection() {
   ];
 
   return (
-    <section ref={ref} className="py-32 bg-[#0d0d0d]">
+    <section ref={ref} className="py-32 bg-[#F7F2EC]">
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -63,7 +63,7 @@ export default function ReviewsSection() {
             Reviews
             <span className="w-8 h-px bg-gold-500" />
           </span>
-          <h2 className="font-serif text-4xl md:text-5xl text-[#f5f0eb] font-light">
+          <h2 className="font-serif text-4xl md:text-5xl text-[#1a1a1a] font-light">
             What Clients{" "}
             <span className="gold-shimmer font-semibold">Say</span>
           </h2>
@@ -77,10 +77,10 @@ export default function ReviewsSection() {
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: i * 0.1 }}
-              className="glass p-7 border border-gold-500/10 hover:border-gold-500/25 transition-colors duration-300"
+              className="glass p-7 border border-gold-500/10 hover:border-gold-500/30 transition-all duration-300 hover:shadow-md"
             >
               <StarRating rating={review.rating} />
-              <p className="text-[#909090] text-sm leading-relaxed my-5 font-light italic">
+              <p className="text-[#5C5550] text-sm leading-relaxed my-5 font-light italic">
                 "{review.comment}"
               </p>
               <div className="flex items-center gap-3 pt-4 border-t border-gold-500/10">
@@ -90,8 +90,8 @@ export default function ReviewsSection() {
                   </span>
                 </div>
                 <div>
-                  <p className="text-[#c0c0c0] text-sm font-medium">{review.userName}</p>
-                  <p className="text-[#505050] text-xs">
+                  <p className="text-[#1C1918] text-sm font-medium">{review.userName}</p>
+                  <p className="text-[#9C8A82] text-xs">
                     {new Date(review.createdAt).toLocaleDateString("en-US", { year: "numeric", month: "short" })}
                   </p>
                 </div>

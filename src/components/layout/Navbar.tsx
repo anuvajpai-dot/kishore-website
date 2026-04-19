@@ -3,23 +3,22 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { useSession, signIn, signOut } from "next-auth/react";
-import { Menu, X, Camera } from "lucide-react";
-import Image from "next/image";
+import { Menu, X, Camera, MessageCircle } from "lucide-react";
 
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/portfolio", label: "Portfolio" },
-  { href: "/services", label: "Services" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
+
+const WHATSAPP_URL =
+  "https://wa.me/4915163034064?text=Hi%20Kishore%2C%20I%27m%20interested%20in%20a%20photography%20session.";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
-  const { data: session } = useSession();
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 50);
@@ -30,7 +29,9 @@ export default function Navbar() {
   return (
     <motion.header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? "bg-[#0a0a0a]/95 backdrop-blur-md border-b border-gold-500/20 shadow-2xl" : "bg-transparent"
+        scrolled
+          ? "bg-[#FDFCFA]/95 backdrop-blur-md border-b border-[#EAE4DC] shadow-sm"
+          : "bg-[#FDFCFA]/85 backdrop-blur-sm"
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -43,9 +44,8 @@ export default function Navbar() {
             <Camera size={18} className="text-gold-500 group-hover:text-gold-400 transition-colors" />
           </div>
           <div className="leading-tight hidden sm:block">
-            <p className="text-gold-500 font-serif text-lg font-semibold tracking-wide leading-none">KG</p>
-            <p className="text-[#a0a0a0] text-[10px] tracking-[0.2em] uppercase leading-none mt-0.5">
-              Engineered Moments
+            <p className="text-[#1C1918] font-serif text-base font-semibold tracking-wide leading-none">
+              The Ordinary Photographer
             </p>
           </div>
         </Link>
@@ -59,7 +59,7 @@ export default function Navbar() {
                 className={`text-sm tracking-widest uppercase transition-colors duration-300 ${
                   pathname === link.href
                     ? "text-gold-500"
-                    : "text-[#c0c0c0] hover:text-gold-400"
+                    : "text-[#6B5F5A] hover:text-gold-500"
                 }`}
               >
                 {link.label}
@@ -68,50 +68,22 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* Auth + CTA */}
-        <div className="hidden md:flex items-center gap-4">
-          {session ? (
-            <div className="flex items-center gap-3">
-              {session.user?.image && (
-                <Image
-                  src={session.user.image}
-                  alt={session.user.name || "User"}
-                  width={32}
-                  height={32}
-                  className="rounded-full border border-gold-500/50"
-                />
-              )}
-              {(session.user as any)?.role === "ADMIN" && (
-                <Link
-                  href="/admin/dashboard"
-                  className="text-xs tracking-widest uppercase text-gold-500 hover:text-gold-400 transition-colors"
-                >
-                  Admin
-                </Link>
-              )}
-              <button
-                onClick={() => signOut()}
-                className="text-xs tracking-widest uppercase text-[#808080] hover:text-[#c0c0c0] transition-colors"
-              >
-                Sign Out
-              </button>
-            </div>
-          ) : (
-            <button
-              onClick={() => signIn("google")}
-              className="text-xs tracking-widest uppercase text-[#a0a0a0] hover:text-gold-400 transition-colors"
-            >
-              Sign In
-            </button>
-          )}
-          <Link href="/contact" className="btn-gold text-xs py-2 px-6">
-            Book Now
-          </Link>
+        {/* WhatsApp CTA */}
+        <div className="hidden md:flex items-center">
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe5d] text-white text-xs font-semibold tracking-widest uppercase px-5 py-2.5 transition-colors duration-300"
+          >
+            <MessageCircle size={14} />
+            WhatsApp
+          </a>
         </div>
 
         {/* Mobile menu button */}
         <button
-          className="md:hidden text-[#c0c0c0] hover:text-gold-500 transition-colors"
+          className="md:hidden text-[#333] hover:text-gold-500 transition-colors"
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
         >
@@ -126,7 +98,7 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-[#0a0a0a]/98 backdrop-blur-md border-t border-gold-500/10"
+            className="md:hidden bg-white border-t border-gray-100"
           >
             <ul className="px-6 py-6 space-y-4">
               {navLinks.map((link) => (
@@ -135,7 +107,7 @@ export default function Navbar() {
                     href={link.href}
                     onClick={() => setOpen(false)}
                     className={`block text-sm tracking-widest uppercase py-2 transition-colors ${
-                      pathname === link.href ? "text-gold-500" : "text-[#c0c0c0]"
+                      pathname === link.href ? "text-gold-500" : "text-[#555]"
                     }`}
                   >
                     {link.label}
@@ -143,33 +115,17 @@ export default function Navbar() {
                 </li>
               ))}
               <li>
-                <Link
-                  href="/contact"
+                <a
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => setOpen(false)}
-                  className="block text-center btn-gold text-xs mt-4"
+                  className="flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1ebe5d] text-white text-xs font-semibold tracking-widest uppercase px-5 py-3 mt-4 w-full transition-colors"
                 >
-                  Book a Session
-                </Link>
+                  <MessageCircle size={14} />
+                  Contact on WhatsApp
+                </a>
               </li>
-              {session ? (
-                <li>
-                  <button
-                    onClick={() => { signOut(); setOpen(false); }}
-                    className="text-sm tracking-widest uppercase text-[#808080] hover:text-[#c0c0c0]"
-                  >
-                    Sign Out
-                  </button>
-                </li>
-              ) : (
-                <li>
-                  <button
-                    onClick={() => { signIn("google"); setOpen(false); }}
-                    className="text-sm tracking-widest uppercase text-[#a0a0a0] hover:text-gold-400"
-                  >
-                    Sign In with Google
-                  </button>
-                </li>
-              )}
             </ul>
           </motion.div>
         )}
